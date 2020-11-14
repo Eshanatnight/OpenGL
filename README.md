@@ -12,7 +12,6 @@
 
 ---
 
-
 ### Languages and Tools:
 
 <a title="Visual Studio"><img src="https://github.com/Eshanatnight/Eshanatnight/blob/master/icons/visual-studio.png" height=30/> </a>
@@ -31,5 +30,6 @@
 ---
 
 ## Dependencies
-<a title="GLFW" href="https://github.com/glfw/glfw"> 1. GLFW </a>
-<a title="GLFW" href="https://github.com/nigels-com/glew"> 2. GLEW </a>
+
+1. <a title="GLFW" href="https://github.com/glfw/glfw"> GLFW </a>
+2. <a title="GLFW" href="https://github.com/nigels-com/glew"> GLEW </a>
