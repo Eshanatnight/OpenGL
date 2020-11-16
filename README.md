@@ -1,14 +1,33 @@
 # This is an OpenGL Tutorial
-    -> Vertex Buffers
-
-<br/>
-
-
----
-
 ```cpp
     contributions are welcome
 ```
+
+---
+
+### Currently Going On
+    -> Shaders (Rudamentary)
+<br/>
+
+---
+
+
+### To Get Up And Running
+
+open terminal
+and type the following commands 
+
+```terminal
+    mkdir build
+```
+```terminal
+    cd build
+```
+```terminal
+    cmake ..
+```
+
+<br/>
 
 ---
 
@@ -33,3 +52,10 @@
 
 1. <a title="GLFW" href="https://github.com/glfw/glfw"> GLFW </a>
 2. <a title="GLFW" href="https://github.com/nigels-com/glew"> GLEW </a>
+
+<br/>
+
+---
+
+## Important Links:
+1. <a title="Docs" href="https://docs.gl"> docs.gl </a> (For Documentation)
