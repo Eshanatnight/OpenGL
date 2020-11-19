@@ -6,16 +6,17 @@
 #include <GLFW/glfw3.h>
 
 #define ASSERT(x) if (!(x)) __debugbreak();
+
 #define GlCall(x) GLClearError();\
 	x;\
 	ASSERT(GLLogCall(#x, __FILE__, __LINE__))
 
-static void GLClearError()
+void GLClearError()
 {
 	while (glGetError() != GL_NO_ERROR);
 }
 
-static bool GLLogCall(const char* function, const char* file, int line)
+bool GLLogCall(const char* function, const char* file, int line)
 {
 	while (GLenum error = glGetError())
 	{
@@ -114,6 +115,10 @@ int main()
 	if (!glfwInit())
 		return -1;
 
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
 	/* Create a windowed mode window and its OpenGL context */
 	window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
 	if (!window)
@@ -125,7 +130,7 @@ int main()
 	/* Make the window's context current */
 	glfwMakeContextCurrent(window);
 
-	glfwSwapInterval(6.66f);
+	glfwSwapInterval(0);
 
 	if (glewInit() != GLEW_OK)
 		std::cout << "Error!" << std::endl;
@@ -148,14 +153,21 @@ int main()
 		2, 3, 0
 	};
 
+	/* Vertex Arrays Objects */
+	unsigned int vao;
+	GlCall(glGenVertexArrays(1, &vao));
+	GlCall(glBindVertexArray(vao));
+
+	/* Array Buffer Object */
 	unsigned int buffer;
 	GlCall(glGenBuffers(1, &buffer));
 	GlCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));
-	GlCall(glBufferData(GL_ARRAY_BUFFER, 6 * 2 * sizeof(float), positions, GL_STATIC_DRAW));
+	GlCall(glBufferData(GL_ARRAY_BUFFER, 4 * 2 * sizeof(float), positions, GL_STATIC_DRAW));
 
 	GlCall(glEnableVertexAttribArray(0));
 	GlCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0));
 
+	/* Index Buffer Object */
 	unsigned int ibo;
 	GlCall(glGenBuffers(1, &ibo));
 	GlCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo));
@@ -170,10 +182,13 @@ int main()
 	ASSERT(location != -1);
 	GlCall(glUniform4f(location, 0.8f, 0.3f, 0.8f, 1.0f));
 
+	/* clears the state */
+	GlCall(glBindVertexArray(0));
+	GlCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
+	GlCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
+	GlCall(glUseProgram(0));
+
 	float r = 0.0f;
-	float g = 0.3425f;
-	float b = 0.5678f;
-	unsigned int i = 0;
 	float factor = 0.5f;
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
@@ -181,15 +196,20 @@ int main()
 		/* Render here */
 		GlCall(glClear(GL_COLOR_BUFFER_BIT));
 
-		GlCall(glUniform4f(location, r, g, b, 1.0f));
+		GlCall(glBindVertexArray(vao));
+		GlCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo));
+
+		GlCall(glUseProgram(shader));
+		GlCall(glUniform4f(location, r, 0.3f, 0.8f, 1.0f));
 		GlCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
 
-		if (r > 1.0f || g > 1.0f || b > 1.0f)
+		if (r > 1.0f)
 			factor = -0.5f;
-		else if (r < 0.0f || g < 0.0f || b < 0.0f)
+		else if (r < 0.0f)
 			factor = 0.5f;
 
 		r += factor;
+
 		/* Legacy
 		glBegin(GL_TRIANGLES);
 		glVertex2f(-0.5f, -0.5f);
