@@ -1,12 +1,13 @@
 # This is an OpenGL Tutorial
+    Goal -> Make a Basic Renderer via OpenGl
 ```cpp
-    contributions are welcome
+Contributions are Welcome
 ```
 
 ---
 
 ### Currently Going On
-    -> Shaders (Rudamentary)
+        Abstraction
 <br/>
 
 ---
@@ -54,6 +55,8 @@ and type the following commands
 2. <a title="GLFW" href="https://github.com/nigels-com/glew"> GLEW </a>
 
 <br/>
+
+    Note: You Need To add the dependeencies to the correct include path in the IDE
 
 ---
 
