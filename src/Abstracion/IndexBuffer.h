@@ -2,6 +2,7 @@
 
 typedef unsigned int uint;
 
+/* Inder Buffer class */
 class IndexBuffer
 {
 private:
