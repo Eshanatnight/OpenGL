@@ -1,6 +1,7 @@
 #pragma once
 typedef unsigned int uint;
 
+/* Vertex Buffer Class */
 class VertexBuffer
 {
 private:
