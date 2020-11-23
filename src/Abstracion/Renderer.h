@@ -9,6 +9,8 @@
 	x;\
 	ASSERT(GLLogCall(#x, __FILE__, __LINE__))
 
+typedef unsigned int uint;
+
 void GLClearError();
 
 bool GLLogCall(const char* function, const char* file, int line);

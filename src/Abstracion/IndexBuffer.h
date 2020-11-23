@@ -1,4 +1,5 @@
 #pragma once
+
 typedef unsigned int uint;
 
 class IndexBuffer
@@ -15,5 +16,7 @@ public:
 	void Unbind() const;
 
 	inline uint GetCount() const
-	{	return m_count;	}
+	{
+		return m_count;
+	}
 };
