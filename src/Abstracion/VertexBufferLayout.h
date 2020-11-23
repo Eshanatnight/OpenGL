@@ -2,8 +2,8 @@
 
 #include <vector>
 #include "Renderer.h"
-#include "GL\glew.h"
 
+/* Wrapper for BufferElement */
 struct VertexBufferElement
 {
 	uint type;
@@ -24,9 +24,9 @@ struct VertexBufferElement
 	}
 };
 
+/* Vertex Buffer Layout Class*/
 class VertexBufferLayout
 {
-
 private:
 	std::vector<VertexBufferElement> m_Element;
 	uint m_Stride;
@@ -66,7 +66,4 @@ public:
 	inline uint GetStride() const { return m_Stride; }
 
 	inline const std::vector<VertexBufferElement>& GetElements() const { return m_Element; }
-
-
-
 };
