@@ -7,7 +7,7 @@ Contributions are Welcome
 ---
 
 ### Currently Going On
-        Abstraction
+        Textures
 <br/>
 
 ---
@@ -16,7 +16,7 @@ Contributions are Welcome
 ### To Get Up And Running
 
 open terminal
-and type the following commands 
+and type the following commands
 
 ```terminal
     mkdir build
