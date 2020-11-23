@@ -9,7 +9,7 @@
 #include "Renderer.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
-#include "main.h"
+#include "VertexArray.h"
 
 struct ShaderProgramSource
 {
@@ -61,9 +61,9 @@ static ShaderProgramSource ParseShader(const std::string& filePath)
 	return { ss[0].str(), ss[1].str() };
 }
 
-static unsigned int compileShader(unsigned int type, const std::string& source)
+static uint compileShader(uint type, const std::string& source)
 {
-	unsigned int id = glCreateShader(type);
+	uint id = glCreateShader(type);
 	const char* src = source.c_str();
 	GlCall(glShaderSource(id, 1, &src, nullptr));
 	GlCall(glCompileShader(id));
@@ -86,11 +86,11 @@ static unsigned int compileShader(unsigned int type, const std::string& source)
 	return id;
 }
 
-static unsigned int createShader(const std::string& vertexShader, const std::string& fragmentShader)
+static uint createShader(const std::string& vertexShader, const std::string& fragmentShader)
 {
-	unsigned int program = glCreateProgram();
-	unsigned int vs = compileShader(GL_VERTEX_SHADER, vertexShader);
-	unsigned int fs = compileShader(GL_FRAGMENT_SHADER, fragmentShader);
+	uint program = glCreateProgram();
+	uint vs = compileShader(GL_VERTEX_SHADER, vertexShader);
+	uint fs = compileShader(GL_FRAGMENT_SHADER, fragmentShader);
 
 	GlCall(glAttachShader(program, vs));
 	GlCall(glAttachShader(program, fs));
@@ -144,29 +144,29 @@ int main()
 		};
 
 		/* Index Buffer */
-		unsigned int indices[] =
+		uint indices[] =
 		{
 			0, 1, 2,
 			2, 3, 0
 		};
 
 		/* Vertex Arrays Objects */
-		unsigned int vao;
-		GlCall(glGenVertexArrays(1, &vao));
-		GlCall(glBindVertexArray(vao));
+		VertexArray va;
 
 		/* Array Buffer Object */
 		VertexBuffer vb(positions, 4 * 2 * sizeof(float));
 
-		GlCall(glEnableVertexAttribArray(0));
-		GlCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0));
+		/* Vertex Buffer Layout */
+		VertexBufferLayout layout;
+		layout.Push<float>(2);
+		va.AddBuffer(vb, layout);
 
 		/* Index Buffer Object */
 		IndexBuffer ib(indices, 6);
 
 		ShaderProgramSource source = ParseShader("res/shaders/Basic.shader");
 
-		unsigned int shader = createShader(source.VertexShader, source.FragmentShader);
+		uint shader = createShader(source.VertexShader, source.FragmentShader);
 		GlCall(glUseProgram(shader));
 
 		GlCall(int location = glGetUniformLocation(shader, "u_color"));
@@ -187,7 +187,7 @@ int main()
 			/* Render here */
 			GlCall(glClear(GL_COLOR_BUFFER_BIT));
 
-			GlCall(glBindVertexArray(vao));
+			va.Bind();
 			ib.Bind();
 
 			GlCall(glUseProgram(shader));
