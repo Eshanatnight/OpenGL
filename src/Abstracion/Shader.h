@@ -4,21 +4,20 @@
 
 typedef unsigned int uint;
 
+/* Shader File Seperator */
 struct ShaderProgramSource
 {
 	std::string VertexShader;
 	std::string FragmentShader;
 };
 
+/* Shader Class */
 class Shader
 {
 private:
-	// For Debuging
-	std::string m_FilePath;
+	std::string m_FilePath;    // For Debuging
 	uint m_RendererID;
-
-	// caching for uniform
-	std::unordered_map<std::string, int> m_UniformLocationCache;
+	std::unordered_map<std::string, int> m_UniformLocationCache; // caching for uniform
 
 public:
 	Shader(const std::string& filepath);
@@ -27,8 +26,7 @@ public:
 	void Bind() const;
 	void Unbind() const;
 
-	// Set Uniform
-	void SetUniform4f(const std::string name, float v0, float v1, float v2, float v3);
+	void SetUniform4f(const std::string name, float v0, float v1, float v2, float v3);  	// Set Uniform
 
 private:
 	uint createShader(const std::string& vertexShader, const std::string& fragmentShader);

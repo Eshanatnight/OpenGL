@@ -49,6 +49,11 @@ uint Shader::compileShader(uint type, const std::string& source)
 		int length;
 		GlCall(glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length));
 
+		/* alloca "can" cause Stack Overflow Exeption
+			Possible Alternatives
+			1. using _malloca (For Stack Allocation)
+			2. Heap allocating with new (might cause slow down if used repeatedly for modification of the same data buffer
+		*/
 		char* message = (char*)alloca(length * sizeof(char));
 		GlCall(glGetShaderInfoLog(id, length, &length, message));
 		std::cout << "Failed To Compile " << (type == GL_VERTEX_SHADER ? "vertex" : "fragment") << " shader!" << std::endl;
