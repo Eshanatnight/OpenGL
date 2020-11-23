@@ -26,9 +26,11 @@ struct VertexBufferElement
 
 class VertexBufferLayout
 {
+
 private:
 	std::vector<VertexBufferElement> m_Element;
 	uint m_Stride;
+
 public:
 	VertexBufferLayout()
 		:m_Stride(0)
@@ -64,4 +66,7 @@ public:
 	inline uint GetStride() const { return m_Stride; }
 
 	inline const std::vector<VertexBufferElement>& GetElements() const { return m_Element; }
+
+
+
 };
