@@ -4,7 +4,7 @@ typedef unsigned int uint;
 class VertexBuffer
 {
 private:
-	unsigned int m_RendererID;  //? ID for a specific object
+	uint m_RendererID;  //? ID for a specific object
 
 public:
 	VertexBuffer(const void* data, uint size);
