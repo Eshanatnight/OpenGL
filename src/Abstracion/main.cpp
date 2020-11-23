@@ -1,25 +1,11 @@
-#include <string>
-
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
+#include <iostream>
 
 #include "Renderer.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 #include "VertexArray.h"
 #include "Shader.h"
-
-/*
-	// Important
-	Sets the frame rate via LValue references
-	uses a const uint reference instead of an LValue Reference
-	so in the event the frame rate needs to be set by a RValue
-	without the use of the move assignment operator
-*/
-void setFrameRate(const uint& frmRate)
-{
-	glfwSwapInterval(frmRate);
-}
+#include "VertexBufferLayout.h"
 
 int main()
 {
@@ -29,11 +15,7 @@ int main()
 	if (!glfwInit())
 		return -1;
 
-	/* For Setting up the OpenGl Version and Profile */
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
+	setGLVersionCORE(3, 3);
 	/* Create a windowed mode window and its OpenGL context */
 	window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
 	if (!window)
@@ -44,6 +26,8 @@ int main()
 
 	/* Make the window's context current */
 	glfwMakeContextCurrent(window);
+
+	/* Sets the frame rate */
 	uint rate = 5;
 	setFrameRate(rate);
 
@@ -92,21 +76,20 @@ int main()
 		ib.Unbind();
 		shader.Unbind();
 
+		Renderer renderer;
+
 		float r = 0.0f;
 		float factor = 0.5f;
 		/* Loop until the user closes the window */
 		while (!glfwWindowShouldClose(window))
 		{
 			/* Render here */
-			GlCall(glClear(GL_COLOR_BUFFER_BIT));
+			renderer.Clear();
 
 			shader.Bind();
 			shader.SetUniform4f("u_color", r, 0.3f, 0.8f, 1.0f);
 
-			va.Bind();
-			ib.Bind();
-
-			GlCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
+			renderer.Draw(va, ib, shader);
 
 			if (r > 1.0f)
 				factor = -0.5f;
