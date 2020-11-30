@@ -5,6 +5,7 @@
 #include "IndexBuffer.h"
 #include "VertexArray.h"
 #include "Shader.h"
+#include "Texture.h"
 #include "VertexBufferLayout.h"
 
 int main()
@@ -39,10 +40,10 @@ int main()
 		/* Vertex Buffer */
 		float positions[] =
 		{
-			-0.5f, -0.5f,
-			0.5f, -0.5f,
-			0.5f, 0.5f,
-			-0.5f, 0.5f
+			-0.5f, -0.5f, 0.0f, 0.0f, // 0
+			0.5f, -0.5f, 1.0f, 0.0f,  // 1
+			0.5f, 0.5f, 1.0f, 1.0f,   // 2
+			-0.5f, 0.5f, 0.0f, 1.0f   // 3
 		};
 
 		/* Index Buffer */
@@ -56,10 +57,11 @@ int main()
 		VertexArray va;
 
 		/* Array Buffer Object */
-		VertexBuffer vb(positions, 4 * 2 * sizeof(float));
+		VertexBuffer vb(positions, 4 * 4 * sizeof(float));
 
 		/* Vertex Buffer Layout */
 		VertexBufferLayout layout;
+		layout.Push<float>(2);
 		layout.Push<float>(2);
 		va.AddBuffer(vb, layout);
 
@@ -69,6 +71,11 @@ int main()
 		Shader shader("res/shaders/Basic.shader");
 		shader.Bind();
 		shader.SetUniform4f("u_color", 0.8f, 0.3f, 0.8f, 1.0f);
+
+		/* Texture Object */
+		Texture texture("res/textures/iconfinder_debian_395211.png");
+		texture.Bind();
+		shader.SetUniform1i("u_Texture", 0);
 
 		/* clears the state i.e. unbind */
 		va.Unbind();
