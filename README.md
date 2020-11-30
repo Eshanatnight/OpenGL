@@ -4,7 +4,7 @@
 
 
     Goal -> Make a Basic Renderer via OpenGl
-        You Can Check The Renderer at <a href="https://github.com/Eshanatnight/NightNite-Renderer">NightNite</a>
+You Can Check The Renderer at <a href="https://github.com/Eshanatnight/NightNite-Renderer"> NightNite</a>
 ```cpp
 Contributions are Welcome
 ```
@@ -71,5 +71,3 @@ and type the following commands
 
 
 ---
-
-https://github.com/Eshanatnight/NightNite-Renderer
