@@ -1,4 +1,8 @@
 # This is an OpenGL Tutorial
+    This Repository has code to learn OpenGL with GLFW
+    (You Can Follow Along!)
+
+
     Goal -> Make a Basic Renderer via OpenGl
 ```cpp
 Contributions are Welcome
@@ -7,7 +11,7 @@ Contributions are Welcome
 ---
 
 ### Currently Going On
-        Textures
+        Blending!!!
 <br/>
 
 ---
@@ -53,6 +57,7 @@ and type the following commands
 
 1. <a title="GLFW" href="https://github.com/glfw/glfw"> GLFW </a>
 2. <a title="GLFW" href="https://github.com/nigels-com/glew"> GLEW </a>
+3. <a title="stb" herf="https://github.com/nothings/stb"> STB </a>
 
 <br/>
 
